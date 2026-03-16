@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="relative">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_#D3540040,_transparent_60%)] opacity-60 pointer-events-none"></div>
+  <div class="relative mx-auto max-w-4xl px-4 py-14">
+    <a href="{% url 'home' %}" class="inline-flex items-center text-xs text-cream/60 hover:text-cream/90 mb-6">
+      ← Back to all pitmasters
+    </a>
+    <div class="grid gap-8 lg:grid-cols-[3fr,2fr] items-start">
+      <div class="border border-burnt/25 bg-black/30 rounded-2xl p-6 shadow-lg shadow-black/60">
+        <h1 class="text-xl font-semibold text-cream mb-1">Secure your seat</h1>
+        <p class="text-sm text-cream/70 mb-4">
+          Enter your contact details to reserve tickets with PitMaster <span class="text-burnt font-semibold">{{ chef.name }}</span> for you and your people.
+        </p>
+        {% if remaining is not None %}
+        <p class="text-xs text-cream/70 mb-2">
+          {% if remaining > 0 %}
+          <span class="inline-flex items-center rounded-full bg-emerald-500/15 text-emerald-200 px-2 py-0.5 text-[11px] font-medium">{{ remaining }} seats left</span>
+          {% else %}
+          <span class="inline-flex items-center rounded-full bg-red-500/15 text-red-300 px-2 py-0.5 text-[11px] font-medium">Sold out</span>
+          {% endif %}
+        </p>
+        {% endif %}
+        {% if sold_out %}
+        <p class="text-xs text-red-300 mb-3">Ticket sales for this PitMaster's event are currently closed.</p>
+        {% endif %}
+        <form method="post" class="space-y-4">
+          {% csrf_token %}
+          <div class="space-y-3 text-sm">
+            {% for field in form %}
+            <div>
+              <label class="block text-xs font-semibold tracking-wide uppercase text-cream/70 mb-1">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+              <p class="mt-1 text-xs text-red-400">{{ field.errors|striptags }}</p>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          <button
+            type="submit"
+            class="mt-4 inline-flex w-full items-center justify-center rounded-full bg-burnt px-4 py-2.5 text-xs font-semibold tracking-wide uppercase text-charcoal hover:bg-orange-500 transition {% if sold_out %}opacity-40 cursor-not-allowed hover:bg-burnt{% endif %}"
+            {% if sold_out %}disabled{% endif %}
+          >
+            Confirm &amp; Pay with M-Pesa
+          </button>
+        </form>
+        {% if form.non_field_errors %}
+        <p class="mt-2 text-xs text-red-400">{{ form.non_field_errors }}</p>
+        {% endif %}
+      </div>
+      <aside class="border border-burnt/25 bg-black/35 rounded-2xl p-5 text-sm text-cream/75 space-y-4">
+        <div>
+          <div class="text-xs uppercase tracking-wide text-cream/60 mb-1">Your PitMaster</div>
+          <div class="font-semibold text-cream">{{ chef.name }}</div>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-wide text-cream/60 mb-1">Experience</div>
+          <p class="text-xs text-cream/70 leading-relaxed">{{ chef.menu_description }}</p>
+        </div>
+        <div class="border-t border-white/5 pt-3">
+          <div class="text-xs uppercase tracking-wide text-cream/60 mb-1">Payment route</div>
+          <p class="text-xs text-cream/70">Tickets for this event are routed securely via M-Pesa STK push after checkout.</p>
+        </div>
+        {% if chef.ticket_price %}
+        <div class="border-t border-white/5 pt-3">
+          <div class="text-xs uppercase tracking-wide text-cream/60 mb-1">Ticket price</div>
+          <p class="text-xs text-cream/75 font-mono">Ksh {{ chef.ticket_price|floatformat:0 }}</p>
+        </div>
+        {% endif %}
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

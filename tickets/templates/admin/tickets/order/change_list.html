@@ -1,0 +1,27 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+  {% if sales_summary %}
+    <div class="module" style="margin-bottom: 20px;">
+      <h2>Paid ticket summary by chef</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Chef</th>
+            <th>Paid tickets</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in sales_summary %}
+          <tr>
+            <td>{{ row.chef__name }}</td>
+            <td>{{ row.total_paid }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  {{ block.super }}
+{% endblock %}

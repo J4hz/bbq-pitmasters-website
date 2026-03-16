@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="relative overflow-hidden" id="top">
+  <div class="absolute inset-0">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_#D3540040,_transparent_60%),_radial-gradient(circle_at_bottom,_#F4ECD820,_transparent_55%)] opacity-70"></div>
+    <div class="absolute inset-0 bg-[url('https://images.pexels.com/photos/5638736/pexels-photo-5638736.jpeg')] bg-cover bg-center opacity-40 mix-blend-screen"></div>
+  </div>
+  <div class="relative mx-auto max-w-6xl px-4 py-20 lg:py-28 flex flex-col gap-10 lg:flex-row lg:items-end">
+    <div class="max-w-xl">
+      <p class="text-xs uppercase tracking-[0.25em] text-cream/70 mb-3">Family fire sessions</p>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-cream mb-4">
+        Slow-smoked gatherings
+        <br />
+        for families &amp; friends.
+      </h1>
+      <p class="text-sm sm:text-base text-cream/75 max-w-xl mb-4">
+        Share one-off, chef-led BBQ afternoons with the people you love. Family-style platters, relaxed seating, and a simple way to reserve tickets and pay with M-Pesa.
+      </p>
+      <div class="flex flex-wrap gap-3 text-[11px] text-cream/70">
+        <span class="inline-flex items-center gap-1 rounded-full border border-burnt/30 bg-black/30 px-3 py-1"><i class="fa-solid fa-fire-flame-curved text-burnt"></i> Open-fire tasting menus</span>
+        <span class="inline-flex items-center gap-1 rounded-full border border-burnt/30 bg-black/30 px-3 py-1"><i class="fa-solid fa-user-group"></i> Shared tables for all ages</span>
+        <span class="inline-flex items-center gap-1 rounded-full border border-burnt/30 bg-black/30 px-3 py-1"><i class="fa-solid fa-mobile-screen-button"></i> M-Pesa tickets</span>
+        <span class="inline-flex items-center gap-1 rounded-full border border-burnt/30 bg-black/30 px-3 py-1"><i class="fa-solid fa-heart"></i> Family-friendly atmosphere</span>
+      </div>
+    </div>
+    <div class="w-full max-w-md lg:ml-auto">
+      <div
+        id="hero-countdown"
+        class="rounded-3xl border border-burnt/30 bg-black/40 backdrop-blur-lg px-6 py-5 text-xs text-cream/85 shadow-[0_18px_60px_rgba(0,0,0,0.75)]"
+        data-target="{{ event_datetime_iso }}"
+      >
+        <div class="flex items-center justify-between gap-4 mb-4">
+          <div>
+            <div class="cd-label uppercase tracking-[0.22em] text-[10px] text-cream/60 mb-1">
+              Next main service
+            </div>
+            <p class="text-[11px] text-cream/70 max-w-xs">
+              Lock in your seat for the next BBQ PITMASTERS showcase. Once the clock hits zero, doors open and fires light.
+            </p>
+          </div>
+          <div class="hidden sm:flex flex-col items-end text-[10px] text-cream/60">
+            <span class="uppercase tracking-[0.22em]">Limited tickets</span>
+            <span class="mt-1 inline-flex items-center gap-1 rounded-full bg-burnt px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-charcoal">
+              <i class="fa-solid fa-ticket"></i> Book your table
+            </span>
+          </div>
+        </div>
+        <div class="grid grid-cols-4 gap-3 font-mono text-center text-cream">
+          <div class="rounded-2xl bg-white/5 py-3">
+            <div id="cd-days" class="text-2xl font-semibold leading-none">--</div>
+            <div class="mt-1 text-[10px] uppercase tracking-wide text-cream/60">Days</div>
+          </div>
+          <div class="rounded-2xl bg-white/5 py-3">
+            <div id="cd-hours" class="text-2xl font-semibold leading-none">--</div>
+            <div class="mt-1 text-[10px] uppercase tracking-wide text-cream/60">Hours</div>
+          </div>
+          <div class="rounded-2xl bg-white/5 py-3">
+            <div id="cd-mins" class="text-2xl font-semibold leading-none">--</div>
+            <div class="mt-1 text-[10px] uppercase tracking-wide text-cream/60">Mins</div>
+          </div>
+          <div class="rounded-2xl bg-white/5 py-3 hidden sm:block">
+            <div id="cd-secs" class="text-2xl font-semibold leading-none">--</div>
+            <div class="mt-1 text-[10px] uppercase tracking-wide text-cream/60">Sec</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative mx-auto max-w-6xl px-4 pb-10">
+    <div class="mt-4 mb-10">
+      {% if main_event_video_url %}
+      <div class="aspect-video rounded-3xl overflow-hidden border border-burnt/25 bg-black/40 shadow-[0_20px_60px_rgba(0,0,0,0.75)]">
+        <iframe
+          src="{{ main_event_video_url }}"
+          class="w-full h-full"
+          title="BBQ PITMASTERS teaser"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+      {% else %}
+      <div class="grid gap-6 lg:grid-cols-[3fr,2fr] items-center rounded-3xl border border-burnt/20 bg-black/35 px-5 py-6 shadow-[0_16px_50px_rgba(0,0,0,0.7)]">
+        <div>
+          <h2 class="text-sm font-semibold uppercase tracking-[0.22em] text-cream/75 mb-2">A peek into the pit</h2>
+          <p class="text-xs text-cream/70 max-w-xl">
+            Swap the usual restaurant rush for a slower afternoon around the grill. Use this spot for a short family-friendly reel of kids, friends, and plates being shared around the table.
+          </p>
+        </div>
+        <div class="h-40 rounded-2xl bg-[radial-gradient(circle_at_center,_#D3540060,_transparent_60%)] flex items-center justify-center text-center text-[11px] text-cream/70 px-4">
+          Upload a hero reel or carousel in this slot to give guests a quick feel of the night.
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="mt-8" id="pitmasters">
+      <div class="rounded-3xl bg-cream/90 text-charcoal shadow-[0_18px_50px_rgba(0,0,0,0.65)] overflow-hidden">
+        <div class="px-4 sm:px-6 py-4 border-b border-black/5 flex items-center justify-between">
+          <div>
+            <h2 class="text-sm font-semibold tracking-[0.2em] uppercase text-charcoal/80">PitMasters Gallery</h2>
+            <p class="text-xs text-charcoal/70">Choose a PitMaster hosting relaxed, family-style BBQ sessions.</p>
+          </div>
+          <div class="hidden sm:flex gap-3 text-[11px] text-charcoal/70">
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-charcoal text-cream"><i class="fa-solid fa-fire-flame-curved text-burnt"></i> Live fire</span>
+            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full border border-black/10"><i class="fa-solid fa-ticket"></i> Limited seats</span>
+          </div>
+        </div>
+
+        {% if chefs %}
+        <div class="px-4 sm:px-6 py-5 overflow-x-auto">
+          <div class="flex gap-5 min-w-max">
+            {% for chef in chefs %}
+            <article class="group w-72 sm:w-80 rounded-3xl border border-black/10 bg-white/80 hover:bg-white transition shadow-md hover:shadow-2xl overflow-hidden">
+              {% if chef.image %}
+              <div class="w-full overflow-hidden" style="aspect-ratio: 4 / 5;">
+                <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              {% else %}
+              <div class="w-full bg-gradient-to-br from-burnt/40 via-orange-700/40 to-black flex items-center justify-center text-cream/80 text-[11px] tracking-[0.2em] uppercase" style="aspect-ratio: 4 / 5;">
+                PitMaster Poster
+              </div>
+              {% endif %}
+              <div class="p-4 flex flex-col gap-2">
+                <header class="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 class="text-sm font-semibold text-charcoal">{{ chef.name }}</h3>
+                    <p class="text-[11px] text-charcoal/65 line-clamp-2">{{ chef.bio }}</p>
+                  </div>
+                  <button type="button" class="text-burnt/70 hover:text-burnt">
+                    <i class="fa-regular fa-heart"></i>
+                  </button>
+                </header>
+                <div class="text-[11px] text-charcoal/65 border-t border-black/5 pt-2 mt-1">
+                  <div class="uppercase tracking-wide text-charcoal/70 mb-1">Three-course menu</div>
+                  <p class="line-clamp-2">{{ chef.menu_description }}</p>
+                </div>
+                <div class="mt-1 flex items-center justify-between text-[11px] text-charcoal/70">
+                  <span>M-Pesa powered</span>
+                  {% if chef.ticket_price %}
+                  <span class="font-semibold text-charcoal">Ksh {{ chef.ticket_price|floatformat:0 }}</span>
+                  {% endif %}
+                </div>
+                <div class="mt-2 flex">
+                  <a href="{% url 'chef_detail' chef.id %}" class="inline-flex items-center justify-center rounded-full bg-charcoal px-3 py-1.5 text-[11px] font-semibold tracking-[0.18em] uppercase text-cream hover:bg-black transition w-full text-center">
+                    View experience
+                  </a>
+                </div>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+        {% else %}
+        <div class="px-4 sm:px-6 py-6 text-sm text-charcoal/75 text-center">
+          No pitmasters are live yet. Add pitmasters from the Django admin to start selling tickets.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-[2fr,3fr] items-start" id="how-it-works">
+      <div class="border border-black/5 bg-cream/90 rounded-2xl p-5 shadow-[0_18px_40px_rgba(15,23,42,0.4)]">
+        <h2 class="text-sm font-semibold tracking-wide uppercase text-charcoal/80 mb-4">How it works</h2>
+        <ol class="space-y-3 text-sm text-charcoal/75">
+          <li class="flex gap-3">
+            <span class="h-6 w-6 rounded-full border border-burnt/60 flex items-center justify-center text-xs text-burnt">1</span>
+            <span>Browse upcoming PitMaster experiences in the gallery and pick a day that works for your family or crew.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="h-6 w-6 rounded-full border border-burnt/60 flex items-center justify-center text-xs text-burnt">2</span>
+            <span>Open a PitMaster page, read through the menu and vibe, then enter your contact details to reserve seats.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="h-6 w-6 rounded-full border border-burnt/60 flex items-center justify-center text-xs text-burnt">3</span>
+            <span>Confirm and pay via M-Pesa. We send a QR ticket to your email and phone – just bring your people and enjoy.</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  (function () {
+    const wrapper = document.getElementById("hero-countdown");
+    if (!wrapper) return;
+    const targetStr = wrapper.dataset.target;
+    const target = new Date(targetStr);
+    if (isNaN(target.getTime())) return;
+
+    const daysEl = document.getElementById("cd-days");
+    const hoursEl = document.getElementById("cd-hours");
+    const minsEl = document.getElementById("cd-mins");
+    const secsEl = document.getElementById("cd-secs");
+    const labelEl = wrapper.querySelector(".cd-label");
+
+    function pad(n) {
+      return n.toString().padStart(2, "0");
+    }
+
+    function update() {
+      const now = new Date();
+      let diff = target.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        if (labelEl) labelEl.textContent = "Tonight's fire is live";
+        if (daysEl) daysEl.textContent = "00";
+        if (hoursEl) hoursEl.textContent = "00";
+        if (minsEl) minsEl.textContent = "00";
+        if (secsEl) secsEl.textContent = "00";
+        clearInterval(timer);
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (60 * 60 * 24));
+      const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+      const mins = Math.floor((totalSeconds % (60 * 60)) / 60);
+      const secs = totalSeconds % 60;
+
+      if (daysEl) daysEl.textContent = pad(days);
+      if (hoursEl) hoursEl.textContent = pad(hours);
+      if (minsEl) minsEl.textContent = pad(mins);
+      if (secsEl) secsEl.textContent = pad(secs);
+    }
+
+    update();
+    const timer = setInterval(update, 1000);
+  })();
+</script>
+{% endblock %}

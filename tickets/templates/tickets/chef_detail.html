@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="relative overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_#D3540040,_transparent_60%),_radial-gradient(circle_at_bottom,_#F4ECD820,_transparent_55%)] opacity-70 pointer-events-none"></div>
+  <div class="relative">
+    <!-- Hero -->
+    <div class="mx-auto max-w-6xl px-4 pt-12 pb-10 lg:pt-16 lg:pb-14 grid gap-8 lg:grid-cols-[3fr,2fr] items-start">
+      <div>
+        <p class="text-xs uppercase tracking-[0.25em] text-burnt mb-3">Featured PitMaster</p>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-cream mb-3">{{ chef.name }}</h1>
+        <p class="text-sm sm:text-base text-cream/75 max-w-xl mb-5">{{ chef.bio }}</p>
+        <div class="flex flex-wrap gap-2 text-[11px] text-cream/70 mb-6">
+          <span class="inline-flex items-center gap-1 rounded-full border border-burnt/30 bg-black/30 px-3 py-1"><i class="fa-solid fa-fire-flame-curved text-burnt"></i> Live-fire experience</span>
+          <span class="inline-flex items-center gap-1 rounded-full border border-burnt/30 bg-black/30 px-3 py-1"><i class="fa-solid fa-utensils"></i> Signature 3-course menu</span>
+          <span class="inline-flex items-center gap-1 rounded-full border border-burnt/30 bg-black/30 px-3 py-1"><i class="fa-solid fa-people-roof"></i> Perfect for families &amp; groups</span>
+        </div>
+        {% if event_datetime_iso %}
+        <div
+          id="pitmaster-countdown"
+          class="mb-5 inline-flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border border-burnt/25 bg-black/35 px-4 py-3 text-xs text-cream/85 shadow-md shadow-black/60"
+          data-target="{{ event_datetime_iso }}"
+        >
+          <div class="flex-1">
+            <div class="pm-label uppercase tracking-[0.22em] text-[10px] text-cream/60">
+              Next service with this PitMaster
+            </div>
+          </div>
+          <div class="flex gap-4 font-mono text-center text-cream">
+            <div>
+              <div id="pm-days" class="text-xl font-semibold leading-none">--</div>
+              <div class="mt-1 text-[10px] uppercase tracking-wide text-cream/60">Days</div>
+            </div>
+            <div>
+              <div id="pm-hours" class="text-xl font-semibold leading-none">--</div>
+              <div class="mt-1 text-[10px] uppercase tracking-wide text-cream/60">Hours</div>
+            </div>
+            <div>
+              <div id="pm-mins" class="text-xl font-semibold leading-none">--</div>
+              <div class="mt-1 text-[10px] uppercase tracking-wide text-cream/60">Mins</div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <a href="{% url 'checkout' chef.id %}" class="inline-flex items-center rounded-full bg-burnt px-6 py-2.5 text-xs font-semibold tracking-[0.18em] uppercase text-charcoal hover:bg-orange-500 transition">
+          Book your table
+        </a>
+      </div>
+      <aside class="border border-burnt/25 bg-black/35 rounded-2xl p-5 shadow-lg shadow-black/60 space-y-4">
+        {% if chef.image %}
+        <div class="w-full rounded-xl overflow-hidden mb-3" style="aspect-ratio: 4 / 5;">
+          <img src="{{ chef.image.url }}" alt="{{ chef.name }}" class="h-full w-full object-cover" />
+        </div>
+        {% endif %}
+        <div>
+          <h2 class="text-xs font-semibold uppercase tracking-wide text-cream/70 mb-1">Three-course fire menu</h2>
+          <p class="text-xs text-cream/70 leading-relaxed whitespace-pre-line">{{ chef.menu_description }}</p>
+        </div>
+        <div class="border-t border-white/5 pt-3 text-xs text-cream/70">
+          <div class="flex items-center justify-between mb-1">
+            <span class="uppercase tracking-wide text-[11px] text-cream/60">M-Pesa routing</span>
+          </div>
+          <p class="text-[11px] text-cream/55">All ticket payments for this PitMaster are routed securely via M-Pesa STK push.</p>
+        </div>
+        {% if chef.ticket_price %}
+        <div class="border-t border-white/5 pt-3 text-[11px] text-cream/60 flex items-center justify-between">
+          <span>Ticket</span>
+          <span class="font-mono text-cream/90">Ksh {{ chef.ticket_price|floatformat:0 }}</span>
+        </div>
+        {% endif %}
+        {% if total_capacity %}
+        <div class="border-t border-white/5 pt-3 text-[11px] text-cream/60 flex items-center justify-between">
+          <span>Capacity</span>
+          {% if remaining_capacity and remaining_capacity > 0 %}
+          <span class="font-mono text-emerald-300">{{ remaining_capacity }} / {{ total_capacity }} seats left</span>
+          {% elif remaining_capacity == 0 %}
+          <span class="font-mono text-red-300">Sold out ({{ total_capacity }} seats)</span>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="border-t border-white/5 pt-3 text-[11px] text-cream/55">
+          <p>Once you confirm your ticket and complete payment, a QR code will be generated as your entrance pass.</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Gallery-style section -->
+    <div class="bg-cream/90 text-charcoal rounded-t-3xl shadow-[0_-24px_60px_rgba(0,0,0,0.7)]">
+      <div class="mx-auto max-w-6xl px-4 py-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h2 class="text-sm font-semibold uppercase tracking-[0.2em] text-charcoal/80 mb-1">PitMaster Experience</h2>
+          <p class="text-xs text-charcoal/70 max-w-md">A curated, one-night-only live-fire menu crafted by {{ chef.name }}. Extremely limited seats.</p>
+        </div>
+        <a href="{% url 'checkout' chef.id %}" class="inline-flex items-center rounded-full bg-charcoal px-5 py-2 text-xs font-semibold tracking-[0.18em] uppercase text-cream hover:bg-black transition">
+          Book this experience
+        </a>
+      </div>
+    </div>
+  </div>
+  {% if chef.about %}
+  <div class="mx-auto max-w-6xl px-4 py-10">
+    <h2 class="text-sm font-semibold uppercase tracking-[0.2em] text-cream/75 mb-3">About this PitMaster</h2>
+    <p class="text-sm text-cream/75 leading-relaxed whitespace-pre-line">{{ chef.about }}</p>
+  </div>
+  {% endif %}
+</section>
+{% if event_datetime_iso %}
+<script>
+  (function () {
+    const wrapper = document.getElementById("pitmaster-countdown");
+    if (!wrapper) return;
+    const targetStr = wrapper.dataset.target;
+    const target = new Date(targetStr);
+    if (isNaN(target.getTime())) return;
+
+    const daysEl = document.getElementById("pm-days");
+    const hoursEl = document.getElementById("pm-hours");
+    const minsEl = document.getElementById("pm-mins");
+    const labelEl = wrapper.querySelector(".pm-label");
+
+    function pad(n) {
+      return n.toString().padStart(2, "0");
+    }
+
+    function update() {
+      const now = new Date();
+      let diff = target.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        if (labelEl) labelEl.textContent = "Service is live";
+        if (daysEl) daysEl.textContent = "00";
+        if (hoursEl) hoursEl.textContent = "00";
+        if (minsEl) minsEl.textContent = "00";
+        clearInterval(timer);
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / (60 * 60 * 24));
+      const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+      const mins = Math.floor((totalSeconds % (60 * 60)) / 60);
+
+      if (daysEl) daysEl.textContent = pad(days);
+      if (hoursEl) hoursEl.textContent = pad(hours);
+      if (minsEl) minsEl.textContent = pad(mins);
+    }
+
+    update();
+    const timer = setInterval(update, 60000);
+  })();
+</script>
+{% endif %}
+{% endblock %}
